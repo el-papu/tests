@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <section>
+        <canvas id="myChart"></canvas>
+    </section>
+    <section>
+        <button id="add">+</button>
+    </section>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.1.1/chart.umd.js"></script>
+<script>
+    const data = [
+        { year: 2010, count: 10 },
+        { year: 2011, count: 20 },
+        { year: 2012, count: 15 },
+        { year: 2013, count: 25 },
+        { year: 2014, count: 22 },
+        { year: 2015, count: 30 },
+        { year: 2016, count: 28 },
+    ]
+
+    let year = 2017
+
+    const addButton = document.getElementById("add")
+    const ctx = document.getElementById("myChart")
+    const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: data.map(row => row.year),
+            datasets: [
+                {
+                    label: 'Datos XD',
+                    data: data.map(row => row.count)
+                }
+            ]
+        },
+        options: {
+            scales: {
+                y: {
+                    min: 0,
+                    max: 100
+                }
+            }
+        }
+    })
+
+    addButton.addEventListener("click", () => {
+        data.push({ year: year, count: Math.floor(Math.random() * 35)})
+        year += 1
+        chart.data.labels = data.map(row => row.year)
+        chart.data.datasets[0].data = data.map(row => row.count)
+        chart.update()
+    })
+</script>
+</html>
